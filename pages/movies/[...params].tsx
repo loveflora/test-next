@@ -27,8 +27,6 @@ export default function Detail({ params }: Props): JSX.Element {
         // 엥 ,,, 여기에는 또 / slash 추가해야하네...
         src={`https://image.tmdb.org/t/p/w500/${path}`}
         alt=""
-        width="50%"
-        height="50%"
       />
     </Container>
   );
