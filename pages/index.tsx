@@ -5,6 +5,7 @@ import Seo from "./components/Seo";
 import Link from "next/link";
 
 interface MovieTypes {
+  map(arg0: (v: MovieTypes) => JSX.Element): import("react").ReactNode;
   id: number;
   backdrop_path: string;
   original_title: string;
@@ -15,18 +16,19 @@ interface MovieTypes {
   genre_ids: [number];
 }
 
-export default function Home({ results }: any) {
+export default function Home({ results }: { results: MovieTypes }) {
   const router = useRouter();
 
-  const onClick = (id: number, title: string) => {
+  const onClick = (id: number, title: string, path: string) => {
     router.push(
       {
         pathname: `/movies/${title}/${id}`,
-        // query: { id, title },
+        query: { id, title, path },
         // 쿼리 꼭 안써도 되나...?
       },
       // 표시하고 싶은 형식
-      `/movies/${title}/${id}`
+      `/movies/${title}/${id}/${path}`,
+      //! path 표시 안되게, url 에 표시할 순 없나 ???
     );
   };
 
@@ -40,14 +42,14 @@ export default function Home({ results }: any) {
 
   return (
     <Container className="container">
-      <Seo />
+      <Seo title="Home" />
       {results?.map((v: MovieTypes) => (
         <div
-          onClick={() => onClick(v.id, v.original_title)}
+          onClick={() => onClick(v.id, v.original_title, v.poster_path)}
           className="movie"
           key={v.id}
         >
-          <img src={`https://image.tmdb.org/t/p/w500${v.poster_path}`} />
+          <img src={`https://image.tmdb.org/t/p/w500${v.poster_path}`} alt="" />
           <h4>{v.original_title}</h4>
         </div>
       ))}
