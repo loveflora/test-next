@@ -5,6 +5,7 @@ import Seo from "./components/Seo";
 import Link from "next/link";
 
 interface MovieTypes {
+  // map 도 타입을 지정해줘야 하나 ?
   map(arg0: (v: MovieTypes) => JSX.Element): import("react").ReactNode;
   id: number;
   backdrop_path: string;
@@ -31,6 +32,8 @@ export default function Home({ results }: { results: MovieTypes }) {
       //! path 표시 안되게, url 에 표시할 순 없나 ???
     );
   };
+
+  const a: Number = 1;
 
   // useEffect(() => {
   //   (async () => {
