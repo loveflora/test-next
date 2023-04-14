@@ -28,6 +28,7 @@ export default function Detail({ params }: Props): JSX.Element {
         src={`https://image.tmdb.org/t/p/w500/${path}`}
         alt=""
       />
+      <Title>{title}</Title>
     </Container>
   );
 }
@@ -46,15 +47,20 @@ export function getServerSideProps({ params: { params } }: Params) {
 }
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 20px;
-  gap: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Img = styled.img`
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   border-radius: 12px;
   transition: transform 0.2s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+`;
+
+const Title = styled.div`
+  color: white;
 `;
