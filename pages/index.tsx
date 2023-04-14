@@ -27,7 +27,7 @@ export default function Home({ results }: { results: MovieTypes }) {
         // 쿼리 꼭 안써도 되나...?
       },
       // 표시하고 싶은 형식
-      `/movies/${title}/${id}/${path}`,
+      `/movies/${title}/${id}/${path}`
       //! path 표시 안되게, url 에 표시할 순 없나 ???
     );
   };
@@ -49,8 +49,15 @@ export default function Home({ results }: { results: MovieTypes }) {
           className="movie"
           key={v.id}
         >
-          <img src={`https://image.tmdb.org/t/p/w500${v.poster_path}`} alt="" />
-          <h4>{v.original_title}</h4>
+          <Wrapper>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${v.poster_path}`}
+              alt=""
+            />
+            <div className="cover">
+              <Title className="title">{v.original_title}</Title>
+            </div>
+          </Wrapper>
         </div>
       ))}
     </Container>
@@ -77,22 +84,54 @@ export async function getServerSideProps() {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 20px;
-  gap: 20px;
+  padding: 0 20px;
+  gap: 40px;
+
   .movie {
     cursor: pointer;
   }
+
   .movie img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 12px;
     transition: transform 0.2s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    position: relative;
   }
+
   .movie:hover img {
     transform: scale(1.05) translateY(-10px);
   }
-  .movie h4 {
-    font-size: 18px;
-    text-align: center;
+
+  .movie:hover .cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    transform: scale(1.05) translateY(-10px);
   }
+
+  .movie:hover .title {
+    display: flex;
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const Title = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin: 10px;
+  text-align: center;
+  color: white;
+  display: none;
 `;
