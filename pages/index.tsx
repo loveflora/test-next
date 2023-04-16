@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Seo from "./components/Seo";
 import Image from "next/image";
 import { MovieTypes } from "./types/MovieType";
+import { useMovieData } from "./hooks/useMovieData";
 
-export default function Home({ results }: { results: MovieTypes[] }) {
+export default function Home() {
+  // export default function Home({ results }: { results: MovieTypes[] }) {
   const router = useRouter();
 
   const onClick = (id: number, title: string, path: string) => {
@@ -31,6 +32,8 @@ export default function Home({ results }: { results: MovieTypes[] }) {
   const myLoader = ({ src }: { src: string }) => {
     return `https://image.tmdb.org/${src}`;
   };
+
+  const results = useMovieData();
 
   return (
     <Container className="container">
@@ -66,18 +69,18 @@ export default function Home({ results }: { results: MovieTypes[] }) {
 // 더이상 페이지에 loading은 없고, 영화정보는 전부 reactJS가 아닌 HTML로 보여줌.
 // nextJS가 자동으로 props들을 넣어주고, reactJS가 props를 받아다가 흡수(hydrate) !
 //? getServerSideProps 에서 API를 fetch 해옴.
-export async function getServerSideProps() {
-  //   // 오직 벡엔드에서만 실행됨
-  const { results } = await (
-    await fetch(`http://localhost:3000/api/movies`)
-  ).json();
+// export async function getServerSideProps() {
+//   //   // 오직 벡엔드에서만 실행됨
+//   const { results } = await (
+//     await fetch(`http://localhost:3000/api/movies`)
+//   ).json();
 
-  return {
-    props: {
-      results,
-    },
-  };
-}
+//   return {
+//     props: {
+//       results,
+//     },
+//   };
+// }
 
 const Container = styled.div`
   display: grid;
