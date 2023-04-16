@@ -2,22 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Seo from "./components/Seo";
-import Link from "next/link";
+import Image from "next/image";
+import { MovieTypes } from "./types/MovieType";
 
-interface MovieTypes {
-  // map 도 타입을 지정해줘야 하나 ?
-  map(arg0: (v: MovieTypes) => JSX.Element): import("react").ReactNode;
-  id: number;
-  backdrop_path: string;
-  original_title: string;
-  overview: string;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  genre_ids: [number];
-}
-
-export default function Home({ results }: { results: MovieTypes }) {
+export default function Home({ results }: { results: MovieTypes[] }) {
   const router = useRouter();
 
   const onClick = (id: number, title: string, path: string) => {
@@ -28,12 +16,9 @@ export default function Home({ results }: { results: MovieTypes }) {
         // 쿼리 꼭 안써도 되나...?
       },
       // 표시하고 싶은 형식
-      `/movies/${title}/${id}/${path}`
-      //! path 표시 안되게, url 에 표시할 순 없나 ???
+      `/movies/${title}/${id}/`,
     );
   };
-
-  const a: Number = 1;
 
   // useEffect(() => {
   //   (async () => {
@@ -42,6 +27,10 @@ export default function Home({ results }: { results: MovieTypes }) {
   //     setMovies(results);
   //   })();
   // }, []);
+
+  const myLoader = ({ src }: { src: string }) => {
+    return `https://image.tmdb.org/${src}`;
+  };
 
   return (
     <Container className="container">
@@ -53,9 +42,15 @@ export default function Home({ results }: { results: MovieTypes }) {
           key={v.id}
         >
           <Wrapper>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${v.poster_path}`}
+            <Image
+              src={`t/p/w500${v.poster_path}`}
+              // src={`https://image.tmdb.org/t/p/w500${v.poster_path}`}
               alt=""
+              width={500}
+              height={500}
+              loader={myLoader}
+              // className="img"
+              style={{ width: "100%", height: "auto" }}
             />
             <div className="cover">
               <Title className="title">{v.original_title}</Title>
@@ -94,7 +89,7 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  .movie img {
+  .movie .img {
     width: 100%;
     height: 100%;
     border-radius: 12px;
@@ -103,7 +98,7 @@ const Container = styled.div`
     position: relative;
   }
 
-  .movie:hover img {
+  .movie:hover .img {
     transform: scale(1.05) translateY(-10px);
   }
 
