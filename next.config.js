@@ -1,13 +1,10 @@
-const nextConfig = {
-  compiler: {
-    styledComponents: true,
-  },
-};
-
 const API_KEY = process.env.API_KEY;
 
 module.exports = {
-  reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
+  reactStrictMode: false,
   async rewrites() {
     return [
       {

@@ -3,32 +3,29 @@ import { useRouter } from "next/router";
 import Seo from "../components/Seo";
 import styled from "styled-components";
 
-interface Props {
-  params: string[];
-}
-
-interface Params {
-  params: { params: string[] };
-}
-
 // 컴포넌트 내부에서 router 사용하면, router는 프론트에서만 실행됨. (client side에서만 실행됨)
-export default function Detail({ params }: Props): JSX.Element {
+export default function Detail() {
   const router = useRouter();
-  // server에서는 아직 배열이 아님 -> || []  붙여줘야 함.
-  const [title, id, path] = params || [];
 
-  console.log(params);
+  // server에서는 아직 배열이 아님 -> || []  붙여줘야 함.
+  // const [title, id, path] = params || [];
+  const { original_title, id, backdrop_path } = router.query;
+  // console.log(params);
 
   return (
     <Container>
-      <Seo title={title} />
-      <h4>{title || "Loading"}</h4>
+      <Seo title={typeof original_title === "string" ? original_title : ""} />
+      {/* 
+      typeof original_title === "string" && original_title
+      string | boolean(false) 라서 ERROR
+      */}
+      <h4>{original_title || "Loading"}</h4>
       <Img
         // 엥 ,,, 여기에는 또 / slash 추가해야하네...
-        src={`https://image.tmdb.org/t/p/w500/${path}`}
+        src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`}
         alt=""
       />
-      <Title>{title}</Title>
+      <Title>{original_title}</Title>
     </Container>
   );
 }
@@ -36,15 +33,15 @@ export default function Detail({ params }: Props): JSX.Element {
 // https://image.tmdb.org/t/p/w500qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
 // https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
 
-export function getServerSideProps({ params: { params } }: Params) {
-  // export function getServerSideProps(ctx: any) {
-  // console.log(ctx);
-  return {
-    props: {
-      params,
-    },
-  };
-}
+// export function getServerSideProps({ params: { params } }: Params) {
+//   // export function getServerSideProps(ctx: any) {
+//   // console.log(ctx);
+//   return {
+//     props: {
+//       params,
+//     },
+//   };
+// }
 
 const Container = styled.div`
   display: flex;
