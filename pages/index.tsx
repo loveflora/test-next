@@ -17,7 +17,7 @@ export default function Home() {
         // 쿼리 꼭 안써도 되나...?
       },
       // 표시하고 싶은 형식
-      `/movies/${title}/${id}/`,
+      `/movies/${title}/${id}`
     );
   };
 
@@ -53,7 +53,7 @@ export default function Home() {
               height={500}
               loader={myLoader}
               // className="img"
-              style={{ width: "100%", height: "auto" }}
+              // style={{ width: "100%", height: "auto" }}
             />
             <div className="cover">
               <Title className="title">{v.original_title}</Title>

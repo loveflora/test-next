@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Seo from "../components/Seo";
+import Image from "next/image";
 import styled from "styled-components";
 
 // 컴포넌트 내부에서 router 사용하면, router는 프론트에서만 실행됨. (client side에서만 실행됨)
@@ -9,23 +10,30 @@ export default function Detail() {
 
   // server에서는 아직 배열이 아님 -> || []  붙여줘야 함.
   // const [title, id, path] = params || [];
-  const { original_title, id, backdrop_path } = router.query;
-  // console.log(params);
+  const { title, id, path } = router.query;
+
+  const myLoader = ({ src }: { src: string }) => {
+    return `https://image.tmdb.org/${src}`;
+  };
 
   return (
     <Container>
-      <Seo title={typeof original_title === "string" ? original_title : ""} />
+      <Seo title={typeof title === "string" ? title : ""} />
       {/* 
-      typeof original_title === "string" && original_title
+      typeof title === "string" && title
       string | boolean(false) 라서 ERROR
       */}
-      <h4>{original_title || "Loading"}</h4>
-      <Img
+      <h4>{title || "Loading"}</h4>
+      <Image
         // 엥 ,,, 여기에는 또 / slash 추가해야하네...
-        src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`}
+        src={`t/p/w500/${path}`}
         alt=""
+        width={500}
+        height={500}
+        style={{ width: "100%", height: "auto" }}
+        loader={myLoader}
       />
-      <Title>{original_title}</Title>
+      <Title>{title}</Title>
     </Container>
   );
 }
