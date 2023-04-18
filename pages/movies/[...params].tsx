@@ -23,23 +23,25 @@ export default function Detail() {
       typeof title === "string" && title
       string | boolean(false) 라서 ERROR
       */}
-      <Image
-        src={`t/p/w500/${path}`}
-        alt=""
-        width={500}
-        height={500}
-        // style={{ width: "100%", height: "auto" }}
-        loader={myLoader}
-        className="img"
-      />
+      <ImgWrapper>
+        <Image
+          src={`t/p/w500/${path}`}
+          alt=""
+          width={500}
+          height={500}
+          style={{ width: "100%", height: "auto" }}
+          loader={myLoader}
+          className="img"
+        />
+      </ImgWrapper>
       <Content>
         <Title>{title || "Loading..."}</Title>
         <Info>
           <Info_container>
-            <Info_title>개봉</Info_title> <Info_content>{date}</Info_content>
+            <h3>개봉</h3> <p>{date}</p>
           </Info_container>
           <Info_container>
-            <Info_title>평점</Info_title> <Info_content>{vote}</Info_content>
+            <h3>평점</h3> <p>{vote}</p>
           </Info_container>
         </Info>
         <Overview>{overview}</Overview>
@@ -64,8 +66,13 @@ const Container = styled.div`
     transition: transform 0.2s ease-in-out;
     display: flex;
     justify-content: center;
-    margin: 40px;
   }
+`;
+
+const ImgWrapper = styled.div`
+  width: 500px;
+  height: 600px;
+  margin: 40px;
 `;
 
 const Content = styled.div`
@@ -96,6 +103,12 @@ const Info_container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  & > h1 {
+  }
+
+  & p {
+  }
 `;
 
 const Info_title = styled.div`
