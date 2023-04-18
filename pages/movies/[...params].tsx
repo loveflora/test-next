@@ -26,9 +26,9 @@ export default function Detail() {
       <Image
         src={`t/p/w500/${path}`}
         alt=""
-        width={700}
+        width={500}
         height={500}
-        style={{ width: "100%", height: "auto" }}
+        // style={{ width: "100%", height: "auto" }}
         loader={myLoader}
         className="img"
       />
@@ -60,10 +60,11 @@ export default function Detail() {
 
 const Container = styled.div`
   .img {
-    width: 100%;
-    height: 100%;
     border-radius: 12px;
     transition: transform 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    margin: 40px;
   }
 `;
 
@@ -101,13 +102,6 @@ const Info_title = styled.div`
   color: gray;
 `;
 const Info_content = styled.div`
-  color: white;
-`;
-const Vote = styled.div`
-  color: white;
-`;
-
-const Date = styled.div`
   color: white;
 `;
 
