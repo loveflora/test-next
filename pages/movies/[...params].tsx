@@ -10,7 +10,7 @@ export default function Detail() {
 
   // server에서는 아직 배열이 아님 -> || []  붙여줘야 함.
   // const [title, id, path] = params || [];
-  const { title, id, path } = router.query;
+  const { title, path, vote, date, overview } = router.query;
 
   const myLoader = ({ src }: { src: string }) => {
     return `https://image.tmdb.org/${src}`;
@@ -23,23 +23,30 @@ export default function Detail() {
       typeof title === "string" && title
       string | boolean(false) 라서 ERROR
       */}
-      <h4>{title || "Loading"}</h4>
       <Image
-        // 엥 ,,, 여기에는 또 / slash 추가해야하네...
         src={`t/p/w500/${path}`}
         alt=""
-        width={500}
+        width={700}
         height={500}
         style={{ width: "100%", height: "auto" }}
         loader={myLoader}
+        className="img"
       />
-      <Title>{title}</Title>
+      <Content>
+        <Title>{title || "Loading..."}</Title>
+        <Info>
+          <Info_container>
+            <Info_title>개봉</Info_title> <Info_content>{date}</Info_content>
+          </Info_container>
+          <Info_container>
+            <Info_title>평점</Info_title> <Info_content>{vote}</Info_content>
+          </Info_container>
+        </Info>
+        <Overview>{overview}</Overview>
+      </Content>
     </Container>
   );
 }
-
-// https://image.tmdb.org/t/p/w500qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
-// https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg
 
 // export function getServerSideProps({ params: { params } }: Params) {
 //   // export function getServerSideProps(ctx: any) {
@@ -52,20 +59,59 @@ export default function Detail() {
 // }
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  .img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    transition: transform 0.2s ease-in-out;
+  }
 `;
 
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  transition: transform 0.2s ease-in-out;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 `;
 
 const Title = styled.div`
   color: white;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px;
+`;
+
+const Info = styled.div`
+  color: white;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+`;
+
+const Info_container = styled.div`
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Info_title = styled.div`
+  color: gray;
+`;
+const Info_content = styled.div`
+  color: white;
+`;
+const Vote = styled.div`
+  color: white;
+`;
+
+const Date = styled.div`
+  color: white;
+`;
+
+const Overview = styled.div`
+  color: white;
+  padding: 20px;
 `;

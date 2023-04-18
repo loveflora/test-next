@@ -9,11 +9,18 @@ export default function Home() {
   // export default function Home({ results }: { results: MovieTypes[] }) {
   const router = useRouter();
 
-  const onClick = (id: number, title: string, path: string) => {
+  const onClick = (
+    id: number,
+    title: string,
+    path: string,
+    vote: number,
+    date: string,
+    overview: string
+  ) => {
     router.push(
       {
         pathname: `/movies/${title}/${id}`,
-        query: { id, title, path },
+        query: { id, title, path, vote, date, overview },
         // 쿼리 꼭 안써도 되나...?
       },
       // 표시하고 싶은 형식
@@ -35,12 +42,23 @@ export default function Home() {
 
   const results = useMovieData();
 
+  console.log(results);
+
   return (
     <Container className="container">
       <Seo title="Home" />
       {results?.map((v: MovieTypes) => (
         <div
-          onClick={() => onClick(v.id, v.original_title, v.poster_path)}
+          onClick={() =>
+            onClick(
+              v.id,
+              v.original_title,
+              v.poster_path,
+              v.vote_average,
+              v.release_date,
+              v.overview
+            )
+          }
           className="movie"
           key={v.id}
         >
@@ -52,8 +70,7 @@ export default function Home() {
               width={500}
               height={500}
               loader={myLoader}
-              // className="img"
-              // style={{ width: "100%", height: "auto" }}
+              className="img"
             />
             <div className="cover">
               <Title className="title">{v.original_title}</Title>
@@ -129,7 +146,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 22px;
   font-weight: bold;
   margin: 10px;
   text-align: center;
