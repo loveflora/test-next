@@ -17,6 +17,7 @@ export default function Navbar() {
 const Nav = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -24,4 +25,6 @@ const Logo = styled.img`
   cursor: pointer;
   height: 120px;
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;

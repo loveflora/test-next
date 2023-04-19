@@ -37,14 +37,14 @@ export default function Detail() {
       <Content>
         <Title>{title || "Loading..."}</Title>
         <Info>
-          <Info_container>
+          <div>
             <h3>개봉</h3> <p>{date}</p>
-          </Info_container>
-          <Info_container>
+          </div>
+          <div>
             <h3>평점</h3> <p>{vote}</p>
-          </Info_container>
+          </div>
         </Info>
-        <Overview>{overview}</Overview>
+        <div>{overview}</div>
       </Content>
     </Container>
   );
@@ -61,6 +61,8 @@ export default function Detail() {
 // }
 
 const Container = styled.div`
+  display: flex;
+
   .img {
     border-radius: 12px;
     transition: transform 0.2s ease-in-out;
@@ -70,9 +72,9 @@ const Container = styled.div`
 `;
 
 const ImgWrapper = styled.div`
-  width: 500px;
-  height: 600px;
-  margin: 40px;
+  width: 240px;
+  height: 340px;
+  margin: 20px;
 `;
 
 const Content = styled.div`
@@ -81,6 +83,12 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px;
+
+  & > div {
+    width: 260px;
+    color: white;
+    margin: 20px 0;
+  }
 `;
 
 const Title = styled.div`
@@ -95,27 +103,24 @@ const Info = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 160px;
-`;
 
-const Info_container = styled.div`
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  & > div {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 160px;
 
-  & > h1 {
+    & > h3 {
+      color: gray;
+    }
+
+    & p {
+      color: white;
+    }
   }
-
-  & p {
-  }
-`;
-
-const Info_title = styled.div`
-  color: gray;
-`;
-const Info_content = styled.div`
-  color: white;
 `;
 
 const Overview = styled.div`

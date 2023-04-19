@@ -104,6 +104,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 1fr;
   padding: 0 20px;
   gap: 40px;
+  width: 580px;
 
   .movie {
     cursor: pointer;
